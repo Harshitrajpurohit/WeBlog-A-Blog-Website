@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -48,7 +48,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -221,12 +221,12 @@ const Register = () => {
 
         <div className="mt-6 text-center text-sm sm:text-base text-gray-600 dark:text-gray-300">
           Already have an account?{' '}
-          <a
+          <Link
             href="/Login"
             className="text-indigo-600 hover:text-indigo-500 font-medium transition-colors duration-200"
           >
             Sign In
-          </a>
+          </Link>
         </div>
       </div>
     </div>

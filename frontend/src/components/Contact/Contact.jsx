@@ -32,7 +32,7 @@ const Contact = () => {
     }
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,12 +157,12 @@ const Contact = () => {
 
         <div className="mt-6 text-center text-sm sm:text-base text-gray-600 dark:text-gray-300">
           Prefer another way to reach us?{' '}
-          <a
-            href="mailto:harshitrajpurohit04@gmail.com"
+          <Link
+            to="mailto:harshitrajpurohit04@gmail.com"
             className="text-indigo-600 hover:text-indigo-500 font-medium transition-colors duration-200"
           >
             Email us directly
-          </a>
+          </Link>
         </div>
       </div>
     </div>

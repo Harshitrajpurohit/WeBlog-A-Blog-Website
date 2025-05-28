@@ -44,7 +44,7 @@ const EditBlog = () => {
 const fetchBlogDetails = async (id) => {
   try {
     
-    const res = await fetch(`/api/blog/get/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/get/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const fetchBlogDetails = async (id) => {
 
   const checkSlugAvailability = async (slug, blogId) => {
     try {
-      const res = await fetch(`/api/blog/check-slug/${slug}?excludeId=${blogId}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/check-slug/${slug}?excludeId=${blogId}`);
       const data = await res.json();
       return data.isAvailable;
     } catch (err) {
@@ -148,7 +148,7 @@ const fetchBlogDetails = async (id) => {
 
     try {
       setIsSubmitting(true);
-      const res = await fetch(`/api/blog/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

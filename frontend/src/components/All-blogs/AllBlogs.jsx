@@ -13,7 +13,7 @@ const AllBlogs = () => {
   const fetchBlogs = async (currentPage) => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/blog?page=${currentPage}&limit=9`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog?page=${currentPage}&limit=9`);
       const data = await response.json();
 
       setBlogs(data.blogs);

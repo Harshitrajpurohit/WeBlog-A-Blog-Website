@@ -15,11 +15,11 @@ const ShowBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`/api/blog/${slug}`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/${slug}`);
         const data = await res.json();
         setBlog(data);
 
-        await fetch(`/api/blog/views/${slug}`, {
+        await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/views/${slug}`, {
           method: 'PUT',
         });
       } catch (error) {

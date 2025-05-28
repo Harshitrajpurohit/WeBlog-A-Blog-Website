@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
+
 const Header = () => {
   const [user, setUser] = useState(null);
   const [avatar, setAvatar] = useState('');
@@ -16,7 +17,7 @@ const Header = () => {
       const parsed = JSON.parse(savedUser);
       setUser(parsed);
 
-      fetch(`/api/header?email=${parsed.email}`)
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/header?email=${parsed.email}`)
         .then(res => res.json())
         .then(userData => {
           setAvatar(userData.avatar || '');

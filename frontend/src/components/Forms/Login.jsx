@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ export default function SignIn() {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,9 +121,9 @@ export default function SignIn() {
 
         <div className="mt-6 text-center text-sm sm:text-base text-gray-600 dark:text-gray-300">
           Don't have an account?{' '}
-          <a href="/register" className="text-indigo-600 hover:text-indigo-500 font-medium transition-colors duration-200">
+          <Link href="/register" className="text-indigo-600 hover:text-indigo-500 font-medium transition-colors duration-200">
             Sign up
-          </a>
+          </Link>
         </div>
       </div>
     </div>

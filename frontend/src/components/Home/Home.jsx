@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Card from '../Card/Card'   
+
 const Home = () => {
   
   const [blogs, setBlogs] = useState([]);
@@ -9,7 +11,7 @@ const Home = () => {
  useEffect(() => {
   async function fetchBlogs() {
     try {
-      const response = await fetch('/api/blog/top');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/top`);
       if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
       setBlogs(data);
@@ -25,7 +27,7 @@ const Home = () => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       const parsed = JSON.parse(savedUser);
-      fetch(`/api/header?email=${parsed.email}`)
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/header?email=${parsed.email}`)
         .then(res => res.json())
         .then(userData => {
           setRole(userData.role || '');
@@ -46,12 +48,12 @@ const Home = () => {
             Explore a world of stories, insights, and ideas from creators like you.
           </p>
           {role === 'Creator' && (
-            <a
-              href="/CreateBlog"
+            <Link
+              to="/CreateBlog"
               className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800"
             >
               Create Your Blog
-            </a>
+            </Link>
           )}
         </div>
       </div>

@@ -30,7 +30,7 @@ const Profile = () => {
   }, [navigate]);
 
   const fetchUserData = (email) => {
-    fetch(`/api/profile/${email}`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data) {
@@ -59,7 +59,7 @@ const Profile = () => {
   const handleSave = () => {
     const updatedUser = { ...user, ...formData };
 
-    fetch(`/api/profile/${user.email}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/${user.email}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedUser),

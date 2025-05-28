@@ -1,13 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 const UserBlogs = ({ blog }) => {
   const navigate = useNavigate();
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this blog?')) {
       try {
-        const res = await fetch(`/api/blog/${blog._id}`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/${blog._id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

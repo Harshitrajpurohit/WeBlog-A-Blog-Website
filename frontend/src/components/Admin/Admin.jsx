@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import UserBlogs from '../UserBlogs/UserBlogs';
 
 const Admin = () => {
@@ -12,7 +13,7 @@ const Admin = () => {
     const userEmail = JSON.parse(localStorage.getItem('user'))?.email;
 
     if (userEmail) {
-      fetch(`/api/admin/${userEmail}`, {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/${userEmail}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -66,12 +67,12 @@ const Admin = () => {
                   <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8">
                     Create and manage your blog content with ease.
                   </p>
-                  <a
-                    href="/CreateBlog"
+                  <Link
+                    to="/CreateBlog"
                     className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800"
                   >
                     Create New Blog
-                  </a>
+                  </Link>
                 </div>
               ) : (
                 <div className="max-w-2xl mx-auto">

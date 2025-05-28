@@ -54,7 +54,7 @@ const CreateBlog = () => {
 
   const checkSlugAvailability = async (slug) => {
     try {
-      const res = await fetch(`/api/blog/check-slug/${slug}`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/check-slug/${slug}`);
       const data = await res.json();
       return data.isAvailable;
     } catch (err) {
@@ -132,7 +132,7 @@ const CreateBlog = () => {
 
     try {
       setIsSubmitting(true);
-      const res = await fetch('/api/blog/create', {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -243,7 +243,7 @@ const CreateBlog = () => {
                     src={coverImage}
                     alt="Cover Preview"
                     className="mt-3 w-full h-48 object-cover rounded-lg"
-                    onError={(e) => (e.target.src = 'https://via.placeholder.com/300x200?text=Invalid+Image')}
+                    onError={(e) => (e.target.src = 'https://img.freepik.com/free-photo/technology-communication-icons-symbols-concept_53876-120314.jpg?ga=GA1.1.1280348284.1736662839&semt=ais_hybrid&w=740')}
                   />
                 )}
                 {errorsStep1.coverImage && <p className="text-sm text-red-500 mt-1">{errorsStep1.coverImage}</p>}
