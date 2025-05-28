@@ -17,7 +17,7 @@ const UserBlogs = ({ blog }) => {
 
         if (res.ok) {
           alert('Blog deleted successfully!');
-          window.location.reload(); 
+          navigate("/"); 
         } else {
           throw new Error('Failed to delete blog');
         }
