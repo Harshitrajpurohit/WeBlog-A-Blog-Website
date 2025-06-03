@@ -17,11 +17,7 @@ const UserBlogs = ({ blog }) => {
 
         if (res.ok) {
           alert('Blog deleted successfully!');
-<<<<<<< HEAD
           navigate("/"); 
-=======
-          navigate("/");
->>>>>>> 0d2e592 (Updated Comments)
         } else {
           throw new Error('Failed to delete blog');
         }
