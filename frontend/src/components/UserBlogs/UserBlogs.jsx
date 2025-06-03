@@ -17,7 +17,11 @@ const UserBlogs = ({ blog }) => {
 
         if (res.ok) {
           alert('Blog deleted successfully!');
+<<<<<<< HEAD
           navigate("/"); 
+=======
+          navigate("/");
+>>>>>>> 0d2e592 (Updated Comments)
         } else {
           throw new Error('Failed to delete blog');
         }
@@ -29,7 +33,8 @@ const UserBlogs = ({ blog }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+    >
       {/* Blog Title */}
       <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 truncate">
         {blog.title}

@@ -29,6 +29,10 @@ const blogSchema = new mongoose.Schema(
     category: {
       type: String,
     },
+    comments:[{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    }],
     isPublished: {
       type: Boolean,
       default: false,

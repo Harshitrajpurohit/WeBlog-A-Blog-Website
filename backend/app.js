@@ -4,6 +4,7 @@ const path = require("path");
 const app = express();
 const Blog = require("./models/BlogS.js");
 const User = require("./models/UserS.js");
+const Comment = require("./models/CommentS.js");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require('connect-flash');
@@ -367,6 +368,57 @@ app.delete('/api/blog/:id', async (req, res) => {
     res.status(500).json({ error: 'Server error while deleting blog' });
   }
 });
+
+
+
+// comments 
+
+
+app.get('/api/:slug/comments', async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const blog = await Blog.findOne({ slug }).populate('author');
+
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
+    const username = blog.author.username;
+
+
+    const comments = await Comment.find({ blog: blog._id }).populate('author');
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.post('/api/:slug/comments', async (req, res) => {
+  try {
+    const { content, author, blog } = req.body;
+
+    // Validate required fields
+    if (!content || !author || !blog) {
+      return res.status(400).json({ error: "Content, author, and blog are required." });
+    }
+
+    const newComment = new Comment({
+      content,
+      author,
+      blog,
+      slug: req.params.slug // Optional: store the slug if needed
+    });
+
+    await newComment.save();
+
+    res.status(201).json({ message: "Comment created successfully", comment: newComment });
+  } catch (error) {
+    console.error("Error saving comment:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 
 app.get('*', (req, res) => {

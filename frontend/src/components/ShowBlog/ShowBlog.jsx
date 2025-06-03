@@ -5,6 +5,7 @@ import "primereact/resources/themes/saga-blue/theme.css"; // PrimeReact theme
 import "primereact/resources/primereact.min.css"; // PrimeReact core CSS
 import "primeicons/primeicons.css"; // PrimeIcons
 import "quill/dist/quill.snow.css"; // Quill CSS for rendering
+import Comments from '../Comments';
 
 const ShowBlog = () => {
   const { slug } = useParams();
@@ -102,6 +103,9 @@ const ShowBlog = () => {
         </div>
 
       </div>
+
+      {/* Comments */}
+      <Comments slug={blog.slug} blogId={blog._id} authorId={blog.author._id}/>
     </div>
   );
 };

@@ -7,6 +7,7 @@ const Admin = () => {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [isRoleValid, setIsRoleValid] = useState(true);
+  const [views, setViews] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const Admin = () => {
 
               // Check if the user role is "Creator"
               if (data.user.role !== 'Creator') {
-                setIsRoleValid(false); // Invalid role, show message
+                setIsRoleValid(false);
               }
             } else {
               console.error('User not found');
@@ -50,7 +51,24 @@ const Admin = () => {
       console.log('No userEmail found in localStorage');
       navigate('/login');
     }
+
   }, [navigate]);
+
+
+
+  useEffect(() => {
+
+    function totalViews() {
+      const total = blogs.reduce((acc, blog) => acc + blog.views, 0);
+      setViews(total);
+    }
+
+    totalViews();
+
+  },[blogs])
+
+
+
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col">
@@ -67,6 +85,15 @@ const Admin = () => {
                   <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8">
                     Create and manage your blog content with ease.
                   </p>
+                  <section className='flex  justify-around'>
+                    <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8">
+                      <b>Total blogs: {blogs.length}</b>
+                    </p>
+                    <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8">
+                      <b>Total Views: {views}</b>
+                    </p>
+                  </section>
+
                   <Link
                     to="/CreateBlog"
                     className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base shadow-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800"
@@ -104,7 +131,7 @@ const Admin = () => {
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {blogs.map((blog) => (
-                <UserBlogs key={blog._id} blog={blog} />
+                <UserBlogs key={blog._id} blog={blog}/>
               ))}
             </div>
           </div>
