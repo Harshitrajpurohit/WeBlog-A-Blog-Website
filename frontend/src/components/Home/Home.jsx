@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Card from '../Card/Card'
+import { useEffect, useState } from 'react';
 import Hero from '../../sections/Hero';
 import TopBlogs from '../../sections/TopBlogs';
 import Reviews from '../../sections/Reviews';
@@ -50,9 +47,7 @@ const Home = () => {
       {/* Featured Blogs Section */}
       <TopBlogs blogs={blogs}/>
 
-
       <Reviews/>
-
 
     </div>
   );
