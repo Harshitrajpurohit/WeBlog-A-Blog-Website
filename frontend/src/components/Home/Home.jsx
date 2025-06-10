@@ -3,28 +3,9 @@ import Hero from '../../sections/Hero';
 import TopBlogs from '../../sections/TopBlogs';
 import Reviews from '../../sections/Reviews';
 
-
-
-
 const Home = () => {
 
-  const [blogs, setBlogs] = useState([]);
   const [role, setRole] = useState('');
-
-  useEffect(() => {
-    async function fetchBlogs() {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/blog/top`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setBlogs(data);
-      } catch (error) {
-        console.error('Fetching blogs failed:', error);
-        setBlogs([]);
-      }
-    }
-    fetchBlogs();
-  }, []);
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -42,15 +23,16 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section with Background Image */}
-      <Hero role={role}/>
+      <Hero role={role} />
 
       {/* Featured Blogs Section */}
-      <TopBlogs blogs={blogs}/>
+      <TopBlogs />
 
-      <Reviews/>
+      <Reviews />
 
     </div>
   );
 };
 
 export default Home;
+
