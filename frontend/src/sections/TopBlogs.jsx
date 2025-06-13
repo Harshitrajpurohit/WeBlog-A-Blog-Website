@@ -19,6 +19,7 @@ const TopBlgs = () => {
       } catch (error) {
         console.error('Fetching blogs failed:', error);
         setBlogs([]);
+        setLoading(false);
       }
     }
     fetchBlogs();
@@ -33,21 +34,25 @@ const TopBlgs = () => {
       </h2>
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array(3).fill(0).map((_, index) => (
-          <div key={index} className="flex justify-center">
-            <ShimmerEffect />
-          </div>
+          {Array(3).fill(0).map((_, index) => (
+            <div key={index} className="flex justify-center">
+              <ShimmerEffect />
+            </div>
           ))}</div>
       ) :
-        (<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.map((blog) => (
-            <div key={blog._id} className="flex justify-center">
-              <Card blog={blog} />
-            </div>
-          ))}
-        </div>)
+        (blogs.length > 0 ?
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs.map((blog) => (
+              <div key={blog._id} className="flex justify-center">
+                <Card blog={blog} />
+              </div>
+            ))}
+          </div> :
+          <div className="text-center text-gray-500 mt-6">
+            No blogs found or failed to load.
+          </div>
+        )
       }
-
     </div >
   );
 };
