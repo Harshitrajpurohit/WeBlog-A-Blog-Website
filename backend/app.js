@@ -57,7 +57,7 @@ app.post('/api/login', async (req, res) => {
       const isMatch = (password == user.password);
       if (!isMatch) return res.status(401).json({ message: 'Invalid email or password' });
   
-      res.status(200).json({ message: 'Login successful', user: { email: user.email } });
+      res.status(200).json({ message: 'Login successful', user});
     } catch (err) {
       console.error('Login error:', err);
       res.status(500).json({ message: 'Server error' });
@@ -413,6 +413,26 @@ app.post('/api/:slug/comments', async (req, res) => {
     await newComment.save();
 
     res.status(201).json({ message: "Comment created successfully", comment: newComment });
+  } catch (error) {
+    console.error("Error saving comment:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+app.delete('/api/:slug/comments', async (req, res) => {
+  try {
+    const { commentId } = req.body;
+
+    const comment = await Comment.findById(commentId);
+
+    if(!comment){
+      res.status(404).json({ message: "Comment not found"});
+    }
+
+    await Comment.findByIdAndDelete(commentId);
+
+    res.status(201).json({ message: "Comment deleted successfully"});
   } catch (error) {
     console.error("Error saving comment:", error);
     res.status(500).json({ error: "Internal server error" });

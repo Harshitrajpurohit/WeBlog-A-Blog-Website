@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Meta } from "react-router";
 import { FaReply } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
 
 export default function Comments({ slug, blogId }) {
     const [content, setContent] = useState("");
@@ -12,7 +13,7 @@ export default function Comments({ slug, blogId }) {
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
-        const userIdFromStorage = user?._id;
+        const userIdFromStorage = user._id;
 
         if (!userIdFromStorage) {
             setIsNotLoggedIn(true);
@@ -46,10 +47,10 @@ export default function Comments({ slug, blogId }) {
             }
 
             const data = await res.json();
-            console.log("Comment submitted successfully:", data);
             alert("Comment added!");
 
             setContent("");
+            getComments();
 
         } catch (error) {
             console.error("Network error:", error);
@@ -84,6 +85,30 @@ export default function Comments({ slug, blogId }) {
         getComments();
     }, [slug]);
 
+    async function handleDeleteComment(commentId) {
+        try {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/${slug}/comments`,{
+                method:'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({commentId})
+            })
+            const data = await res.json();
+            if(res.status === 201){
+                alert(data.message);
+            }
+            if(!res.ok){
+                alert(data.message);
+            }
+            getComments();
+        } catch (error) {
+            console.log("failed to delete.");
+        }
+    }
+
+    console.log(userId);
+    console.log("id: ", comments[0])
 
     return (
         <div className="w-full max-w-4xl mx-auto mt-5 md:mt-10 px-4">
@@ -98,7 +123,7 @@ export default function Comments({ slug, blogId }) {
             ) : (<form className="mb-8" onSubmit={handleSubmit}>
                 <div className="relative w-full mb-4">
                     <textarea
-                    value={content}
+                        value={content}
                         className="w-full min-h-[120px] resize-y bg-gray-800 text-white border border-gray-600 rounded-lg p-4 text-sm placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-300"
                         placeholder="Write your comment..."
                         aria-label="Write a new comment"
@@ -133,15 +158,15 @@ export default function Comments({ slug, blogId }) {
                     ) : (
 
                         comments.map((comment, index) => (
-                            <div className="space-y-4 my-5 text-md md:text:lg"  key={index}>
+                            <div className="space-y-4 my-5 text-md md:text:lg" key={index}>
                                 {/* Comment 1 */}
                                 <div className="bg-gray-800 border border-gray-600 rounded-xl py-3 px-5 md:py-5 md:px-7">
                                     <div className="flex justify-between items-start">
                                         <div>
                                             <p className="text-xs md:text-sm text-gray-400 pb-1">
-                                            <span><img src={comment.author.avatar} alt="avater" className=" rounded-full borderobject-cover w-8 h-8 md:w-10 md:h-10
+                                                <span><img src={comment.author.avatar} alt="avater" className=" rounded-full borderobject-cover w-8 h-8 md:w-10 md:h-10
                             border-2 border-blue-400 inline mr-2" /></span>
-                                            <span className="font-medium text-sm text-white pr-1">{comment.author.username}</span> · {new Date(comment.createdAt).toLocaleString()}
+                                                <span className="font-medium text-sm text-white pr-1">{comment.author.username}</span> · {new Date(comment.createdAt).toLocaleString()}
                                             </p>
                                             <p className="mt-2 text-white text-sm">
                                                 {comment.content}
@@ -154,6 +179,21 @@ export default function Comments({ slug, blogId }) {
                                         >
                                             {/* <FaReply/> */}
                                         </button>
+                                        {
+                                            userId == comment.author._id && (
+                                                <button
+                                                    className={`text-xl text-white hover:text-blue-300 focus:outline-none focus:underline cursor-pointer
+                                                `}
+                                                onClick={() => handleDeleteComment(comment._id)}
+                                                    aria-label="Reply to User1's comment"
+
+                                                >
+                                                    <MdDeleteOutline />
+                                                </button>
+                                            )
+                                        }
+
+
                                     </div>
                                     {/* Nested Reply */}
                                     {/* <div className="mt-4 pl-6 border-l-2 border-gray-500">

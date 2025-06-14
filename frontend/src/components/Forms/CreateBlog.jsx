@@ -25,8 +25,8 @@ const CreateBlog = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const userIdFromStorage = user?._id;
-
+    const userIdFromStorage = user._id;
+    console.log(user);
     if (!userIdFromStorage) {
       setIsNotLoggedIn(true);
       setTimeout(() => navigate('/login'), 3000);

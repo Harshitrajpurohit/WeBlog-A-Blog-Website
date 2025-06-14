@@ -4,7 +4,7 @@ import TopBlogs from '../../sections/TopBlogs';
 import Reviews from '../../sections/Reviews';
 
 const Home = () => {
-
+  
   const [role, setRole] = useState('');
 
   useEffect(() => {

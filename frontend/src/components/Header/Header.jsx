@@ -13,6 +13,7 @@ const Header = () => {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
+    console.log(savedUser);
     if (savedUser) {
       const parsed = JSON.parse(savedUser);
       setUser(parsed);

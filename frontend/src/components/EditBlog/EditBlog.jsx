@@ -26,7 +26,7 @@ const EditBlog = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
-    const userIdFromStorage = user?._id;
+    const userIdFromStorage = user._id;
 
     if (!userIdFromStorage) {
       setIsNotLoggedIn(true);
